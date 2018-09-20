@@ -9,7 +9,6 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            
           </li>
         </ul>
         <div class="form-inline my-2 my-lg-0">
@@ -31,11 +30,11 @@
           <div class="modal-body">
             <div class="form-group">
               <label>Title</label>
-              <input type="text" class="form-control" placeholder="Enter task title...">
+              <input type="text" class="form-control" placeholder="Enter task title..." v-model="title">
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Add Task</button>
+            <button type="button" class="btn btn-primary" @click="addTask">Add Task</button>
             <button type="button" class="btn btn-link text-muted" data-dismiss="modal">Close</button>
           </div>
         </div>
@@ -105,10 +104,22 @@
 
 <script>
 // @ is an alias to /src
+import db from '@/firebase.config.js'
 
 export default {
   name: 'home',
-  components: {
+  data () {
+    return {
+      title: ''
+    }
+  },
+  created () {
+    
+  },
+  methods: {
+    addTask () {
+      db.ref('kanban-d4f51/')
+    }
   }
 }
 </script>
