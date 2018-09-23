@@ -92,12 +92,6 @@ export default {
       point: 0,
       assign: '',
       categories: []
-      // categories: [
-      //   { title: 'Back-Log', class: 'card-header bg-danger text-white' },
-      //   { title: 'To-Do', class: 'card-header bg-warning text-white' },
-      //   { title: 'Doing', class: 'card-header bg-primary text-white' },
-      //   { title: 'Done', class: 'card-header bg-success text-white' }
-      // ]
     }
   },
   created () {
@@ -125,40 +119,40 @@ export default {
 </script>
 
 <style scoped>
-.lds-facebook {
-  display: inline-block;
-  position: relative;
-  width: 64px;
-  height: 64px;
-}
-.lds-facebook div {
-  display: inline-block;
-  position: absolute;
-  left: 6px;
-  width: 13px;
-  background: #333;
-  animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
-}
-.lds-facebook div:nth-child(1) {
-  left: 6px;
-  animation-delay: -0.24s;
-}
-.lds-facebook div:nth-child(2) {
-  left: 26px;
-  animation-delay: -0.12s;
-}
-.lds-facebook div:nth-child(3) {
-  left: 45px;
-  animation-delay: 0;
-}
-@keyframes lds-facebook {
-  0% {
-    top: 6px;
-    height: 51px;
+  .lds-facebook {
+    display: inline-block;
+    position: relative;
+    width: 64px;
+    height: 64px;
   }
-  50%, 100% {
-    top: 19px;
-    height: 26px;
+  .lds-facebook div {
+    display: inline-block;
+    position: absolute;
+    left: 6px;
+    width: 13px;
+    background: #333;
+    animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
   }
-}
+  .lds-facebook div:nth-child(1) {
+    left: 6px;
+    animation-delay: -0.24s;
+  }
+  .lds-facebook div:nth-child(2) {
+    left: 26px;
+    animation-delay: -0.12s;
+  }
+  .lds-facebook div:nth-child(3) {
+    left: 45px;
+    animation-delay: 0;
+  }
+  @keyframes lds-facebook {
+    0% {
+      top: 6px;
+      height: 51px;
+    }
+    50%, 100% {
+      top: 19px;
+      height: 26px;
+    }
+  }
 </style>
