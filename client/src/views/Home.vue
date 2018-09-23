@@ -61,28 +61,6 @@
         </div>
         <div class="row" v-else>
           <Category v-for="(category, index) in categories" :key="index" :i="index" :category="category" />
-
-          <!-- <div class="col-md-3">
-            <div class="card">
-              <div class="card-header bg-danger text-white">
-                To-Do
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="card">
-              <div class="card-header bg-info text-white">
-                On-Going
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="card">
-              <div class="card-header bg-warning text-white">
-                Finished
-              </div>
-            </div>
-          </div> -->
         </div>
 
         <hr>
