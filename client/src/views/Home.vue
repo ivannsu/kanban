@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a class="navbar-brand" href="#">Kan-ivan</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -32,6 +32,18 @@
               <label>Title</label>
               <input type="text" class="form-control" placeholder="Enter task title..." v-model="title">
             </div>
+            <div class="form-group">
+              <label>Description</label>
+              <textarea rows="2" placeholder="Enter task description..." v-model="description" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Point</label>
+              <input type="number" class="form-control" v-model="point">
+            </div>
+            <div class="form-group">
+              <label>Assigned To</label>
+              <input type="text" class="form-control" v-model="assign" placeholder="Assign to...">
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-primary" @click="addTask">Add Task</button>
@@ -44,30 +56,13 @@
     <main role="main" style="padding-top: 100px">
 
       <div class="container-fluid">
-        <!-- Example row of columns -->
-        <div class="row">
-          <div class="col-md-3">
-            <div class="card">
-              <div class="card-header bg-primary text-white">
-                Pre-Log
-              </div>
-              <div class="card-body">
-                <h5 class="card-title">Special title treatment</h5>
-                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                <nav aria-label="Page navigation example">
-                  <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                      <a class="page-link" href="#">Previous</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">Next</a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3">
+        <div class="lds-facebook" v-if="categories.length === 0">
+          <div></div><div></div><div></div>
+        </div>
+        <div class="row" v-else>
+          <Category v-for="(category, index) in categories" :key="index" :i="index" :category="category" />
+
+          <!-- <div class="col-md-3">
             <div class="card">
               <div class="card-header bg-danger text-white">
                 To-Do
@@ -87,7 +82,7 @@
                 Finished
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
 
         <hr>
@@ -105,21 +100,87 @@
 <script>
 // @ is an alias to /src
 import db from '@/firebase.config.js'
+import Category from '@/components/Category.vue'
 
 export default {
   name: 'home',
+  components: {
+    Category
+  },
   data () {
     return {
-      title: ''
+      title: '',
+      description: '',
+      point: 0,
+      assign: '',
+      categories: []
+      // categories: [
+      //   { title: 'Back-Log', class: 'card-header bg-danger text-white' },
+      //   { title: 'To-Do', class: 'card-header bg-warning text-white' },
+      //   { title: 'Doing', class: 'card-header bg-primary text-white' },
+      //   { title: 'Done', class: 'card-header bg-success text-white' }
+      // ]
     }
   },
   created () {
-    
+    let self = this
+
+    db.ref().on('value', function (snapshot) {
+      self.categories = snapshot.val()
+    })
   },
   methods: {
     addTask () {
-      db.ref('kanban-d4f51/')
+      db.ref('/0/data').push(
+        { title: this.title, description: this.description, point: this.point, assign: this.assign }
+        , function (err) {
+          if (err) {
+            console.log(err, '<====== ERROR addTask()')
+          } else {
+            /* eslint-disable */
+            $('#addTaskModal').modal('hide')
+          }
+        })
     }
   }
 }
 </script>
+
+<style scoped>
+.lds-facebook {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.lds-facebook div {
+  display: inline-block;
+  position: absolute;
+  left: 6px;
+  width: 13px;
+  background: #333;
+  animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+.lds-facebook div:nth-child(1) {
+  left: 6px;
+  animation-delay: -0.24s;
+}
+.lds-facebook div:nth-child(2) {
+  left: 26px;
+  animation-delay: -0.12s;
+}
+.lds-facebook div:nth-child(3) {
+  left: 45px;
+  animation-delay: 0;
+}
+@keyframes lds-facebook {
+  0% {
+    top: 6px;
+    height: 51px;
+  }
+  50%, 100% {
+    top: 19px;
+    height: 26px;
+  }
+}
+</style>
