@@ -32,9 +32,9 @@
           <div class="modal-footer">
             <nav aria-label="Page navigation example">
               <ul class="pagination">
-                <li v-if="i > 0" class="page-item"><a class="page-link bg-warning text-white" href="javascript:void(0)" @click="previous">Previous</a></li>
+                <li v-if="i > 0" class="page-item"><a class="page-link" href="javascript:void(0)" @click="previous">{{ categoryName[i - 1] }}</a></li>
                 <li class="page-item"><a class="page-link text-danger" href="javascript:void(0)" @click="remove">Delete</a></li>
-                <li v-if="i < 3" class="page-item"><a class="page-link bg-success text-white" href="javascript:void(0)" @click="next">ToDo</a></li>
+                <li v-if="i < 3" class="page-item"><a class="page-link" href="javascript:void(0)" @click="next">{{ categoryName[i + 1] }}</a></li>
               </ul>
             </nav>
           </div>
@@ -54,6 +54,7 @@ export default {
   data () {
     return {
       categories: [],
+      categoryName: ['Back-Log', 'To-Do', 'Doing', 'Done'],
       task: {
         id: '',
         title: '',
@@ -62,9 +63,6 @@ export default {
         status: ''
       }
     }
-  },
-  created () {
-    console.log(this.i, '<=============== INDEX OF')
   },
   methods: {
     showDetail (payload) {
@@ -115,7 +113,8 @@ export default {
         })
     },
     remove () {
-
+      db.ref(`/${this.i}/data/${this.task.id}`).remove()
+      $(`#${this.modalId}`).modal('hide')
     }
   },
   components: {
